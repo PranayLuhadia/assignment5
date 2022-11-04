@@ -86,11 +86,11 @@ app.get('/student/:num', function(req, res) {
 });
 
 app.get("/students/add", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/addStudent.html"));
+  res.sendFile(path.join(__dirname,"/views/addstudent.html"));
 });
 
 app.get("/pta", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/addStudent.html"));
+  res.sendFile(path.join(__dirname,"/views/addstudent.html"));
 });
 
 app.post("/students/add", (req,res)=>{
