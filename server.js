@@ -11,11 +11,10 @@
 
 var HTTP_PORT = process.env.PORT || 8080;
 var express = require("express");
-var path = require("path");
-const db = require("./modules/collegeData.js");
+const path = require("path");
+const exphbs = require("express-handlebars");
+const userMod = require("./modules/collegeData.js");
 var app = express();
-//const { redirect } = require("statuses");
-
 app.use(express.static("public"));
 // setup a 'route' to listen on the default url path
 app.use((req,res,next)=>{
@@ -26,90 +25,161 @@ next();
 })
 
 app.use(express.urlencoded({extended: true}));
-
-// setup a 'route' to listen on the default url path
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname,"/views/home.html"));
-});
-
-app.get("/about", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/about.html"));
-});
-
-app.get("/htmlDemo", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/htmlDemo.html"));
-});
-
-app.get("/students",(req,res)=>{
-  var course = req.query.course;
-  if(course != "" && course > 0){
-    db.getStudentsByCourse(course).then( data => {
-      // data will be an object array of students registered in a specific course
-      res.json(data);
-    }).catch(err => {
-      res.json( {message: err} );
+app.use(function (req, res, next) {
+    let route = req.path.substring(1);
+    app.locals.activeRoute =
+      "/" +
+      (isNaN(route.split("/")[1])
+        ? route.replace(/\/(?!.*)/, "")
+        : route.replace(/\/(.*)/, ""));
+    next();
+  });
+  
+  app.engine(
+    ".hbs",
+    exphbs.engine({
+      extname: ".hbs",
+      helpers: {
+        navLink: function (url, options) {
+          return (
+            "<li" +
+            (url == app.locals.activeRoute
+              ? ' class="nav-item active" '
+              : ' class="nav-item" ') +
+            '><a class="nav-link" href="' +
+            url +
+            '">' +
+            options.fn(this) +
+            "</a></li>"
+          );
+        },
+        equal: function (lvalue, rvalue, options) {
+            if (arguments.length < 3)
+            throw new Error("Handlebars Helper equal needs 2 parameters");
+            if (lvalue != rvalue) {
+            return options.inverse(this);
+            } else {
+            return options.fn(this);
+            }
+           }
+      },
     })
-  } else {
-    // return JSON formatted string of all students (default)
-    db.getAllStudents().then( data => {
-        res.json(data); 
-    }).catch(err => {
-        res.json({message: err});
+  );
+  
+  app.set("view engine", ".hbs");
+
+   
+
+
+app.get("/students", (req,res)=>{
+
+    if(req.query.course){
+        userMod.getStudentsByCourse(req.query.course).then(data=>{
+           res.render("students",{students: data});
+            
+        }).catch(err=>{
+           
+            res.json({message:"no results"});
+        })
+    }else{
+        userMod.getAllStudents().then(data=>{
+            res.render("students",{students: data}); // or res.send() would work here too
+        }).catch(err=>{
+            res.senc({message:"no results"}); // show the error to the user
+        });
+    }
+});
+
+// app.get("/tas", (req,res)=>{
+//         userMod.getTAs().then(tas=>{
+//             res.json(tas); // or res.send() would work here too
+//         }).catch(err=>{
+//             res.json({message:"no results"}); // show the error to the user
+//         });
+//    });
+
+   app.get("/courses", (req,res)=>{
+    userMod.getCourses().then(data=>{
+        res.render("courses", {courses: data}); // or res.send() would work here too
+    }).catch(err=>{
+        res.render("courses", {message: "no results"}); // show the error to the user
     });
-  }
 });
 
-app.get("/courses",(req,res)=>{
-  db.getCourses().then((data)=>{
-    res.json(data);
-  }).catch((err)=>{
-    res.json({message:err})
-  });
+app.get("/student/:num", (req,res)=>{
+    
+    userMod.getStudentByNum(req.params.num).then(data=>{
+        res.render("student", { student: data });
+    }).catch(err=>{
+        
+        res.json({message:"no results"}); 
+    });
 });
 
-app.get("/tas",(req,res)=>{
-  db.getTAs().then((data)=>{
-    res.json(data);
-  }).catch((err)=>{
-    res.json({message:err})
-  });
+app.get("/course/:id", (req,res)=>{
+    
+    userMod.getCourseById(req.params.id).then(data=>{
+        res.render("course", {course: data});
+    }).catch(err=>{
+        
+        res.json({message:"no results"}); 
+    });
 });
 
-app.get('/student/:num', function(req, res) {
-  var num = req.params.num;
-  //res.send(req.params.num);
-  db.getStudentByNum(num).then(data => {
-      res.json(data);
-  }).catch(err=> {
-      res.json({message: err});
-  });
+
+
+app.get("/", (req,res)=>{
+    //res.sendFile(path.join(__dirname, "/views/home.html"));
+    res.render("home");
+    
 });
 
-app.get("/students/add", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/addstudent.html"));
+app.get("/htmlDemo", (req,res)=>{
+    //res.sendFile(path.join(__dirname, "/views/htmlDemo.html"));
+    res.render("htmlDemo");
 });
 
-app.get("/pta", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/addstudent.html"));
+app.get("/home", (req,res)=>{
+    //res.sendFile(path.join(__dirname, "/views/home.html"));
+    res.render("home");
 });
 
+
+app.get("/students/add", (req,res)=>{
+    //res.sendFile(path.join(__dirname, "/views/addStudent.html"));
+    res.render("addStudent")
+});
+
+app.get("/about", (req,res)=>{ 
+    
+    //res.sendFile(path.join(__dirname, "/views/about.html"));
+    res.render("about");
+   
+});
 app.post("/students/add", (req,res)=>{
-  req.body.TA = (req.body.TA) ? true : false;   
-    db.addStudent(req.body).then(()=>{
-      res.redirect("/students");
-      }).catch((err)=>{
-      res.json("Error");
-  });
+    req.body.TA = (req.body.TA) ? true : false;   
+      userMod.addStudent(req.body).then(()=>{
+        res.redirect("/students");
+        }).catch((err)=>{
+        
+        res.json("Error");
+    });
+    
+});
+app.post("/student/update", (req, res) => {
+    req.body.TA = (req.body.TA) ? true : false;  
+    userMod.updateStudent(req.body);
+    res.redirect("/students");
+   });
+
+app.use((req,res,next)=>{
+    res.status(404).render("route");// .sendFile(), .json(), etc or .end() (sends nothing back)
 });
 
-app.use((req, res,next) => {
-  res.status(404).sendFile(path.join(__dirname,"/views/404.html"));
-});
-
-db.initialize().then(()=>{
-  // start the server
-  app.listen(HTTP_PORT, ()=>{console.log("server listening on port: " + HTTP_PORT)});
+userMod.initialize().then(()=>{
+    app.listen(HTTP_PORT, ()=>{
+        console.log("server listening on: " + HTTP_PORT);
+    });
 }).catch(err=>{
-  // output the error to the console
-  res.json({message: err});
+    console.log(err)
 });
