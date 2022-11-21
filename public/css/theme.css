@@ -2,23 +2,22 @@
 @import url('https://fonts.googleapis.com/css2?family=League+arial&family=arial+Swashed:wght@300;600&family=arial+Sans:wght@700&family=Syne+Mono&display=swap&family=arial&display=swap&family=Black+And+White+Picture&display=swap');
 
 .bg-light{
-    box-shadow: rgb(61, 4, 4) 22px -16px 18px -5px;
+    box-shadow: rgb(157, 15, 15) 22px -16px 18px -5px;
     background-color: #d8edd2;
-    -webkit-box-shadow: #35CAC0 22px -16px 18px -5px;
+    -webkit-box-shadow: #14b92d 22px -16px 18px -5px;
     -moz-box-shadow: rgb(7, 9, 9) 22px -16px 18px -5px;
     box-shadow: rgb(7, 18, 16) 22px -16px 18px -5px;
 }
-
 .tbl-div{
     -webkit-box-shadow: 10px 10px 17px 0px rgb(113, 97, 152);
     -moz-box-shadow: 10px 10px 17px 0px rgba(26,26,26,1);
     box-shadow: 10px 10px 17px 0px rgb(55, 17, 17);
     padding: 1rem;
     margin: 1rem 0;
-    background-color: rgba(39, 23, 2, 0.143) !important;
+    background-color: rgba(132, 13, 13, 0.143) !important;
 }
 .add-div{
-    -webkit-box-shadow: 10px 10px 17px 0px rgba(26,26,26,1);
+    -webkit-box-shadow: 10px 10px 17px 0px rgb(23, 20, 20);
     -moz-box-shadow: 10px 10px 17px 0px rgb(119, 7, 7);
     box-shadow: 10px 10px 17px 0px rgba(26,26,26,1);
     padding: 1rem;
@@ -26,7 +25,7 @@
     background-color: rgb(245, 245, 235) !important;
 }
 .navbar-light .navbar-brand{
-    color: rgb(116, 44, 44) ;
+    color: rgb(204, 207, 25) ;
     font-family: 'Raleway', sans-serif;
     font-size: 35px;
 }
@@ -35,41 +34,39 @@
     color: rgb(1, 2, 1) !important;
 }
 .nav-link:hover{
-    color: rgb(26, 180, 23) !important;  
+    color: rgb(74, 33, 156) !important;  
 }
 html, body{
     overflow: auto;
-    background: rgb(175, 181, 219); /* fallback color */
-    background: linear-gradient(to bottom, rgb(26, 180, 23), rgb(240, 200, 230));
+    background: rgb(175, 181, 219); 
+    background: linear-gradient(to bottom, rgb(111, 179, 15), rgb(12, 21, 125));
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
     height: 100%;
-    
 }
 table tr:nth-child(odd) td, table tr:nth-child(odd) th{
     background-color: #ebebeb !important;
 } 
 h1,h2,h3,h4,h5,h6{
-    color: rgb(0, 0, 0);
+    color: rgb(11, 103, 110);
     text-shadow: 1px 1px #070606;
     font-family: 'Raleway', sans-serif;
-
 }
 a{
-    color: rgb(23, 27, 29) !important;
+    color: rgb(5, 78, 54) !important;
 }
 a:hover{
-    color: rgb(40, 27, 40)  !important;
+    color: rgb(33, 21, 88)  !important;
 }
 fieldset legend {
     font-family: 'Raleway', sans-serif;
     padding-top: 10px;
     padding-bottom: 20px;
-    color: rgb(94, 97, 100);
+    color: rgb(13, 150, 125);
 }
 hr{
-    background-color: rgb(26, 180, 23); 
+    background-color: rgb(69, 75, 14); 
 }
 .btn-primary{
     display: inline-block;
@@ -78,16 +75,16 @@ hr{
     text-align: center;
     text-decoration: none;
     outline: none;
-    background-color: rgb(26, 180, 23);
+    background-color: rgb(41, 23, 180);
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px rgb(26, 180, 23);
+    box-shadow: 0 9px rgb(28, 23, 180);
 } 
 .btn-primary:hover{
-    background-color: rgb(26, 180, 23);
+    background-color: rgb(70, 23, 180);
 }
 .btn-primary:active {
-    background-color: rgb(26, 180, 23);
-    box-shadow: 0 5px rgb(26, 180, 23);
+    background-color: rgb(23, 34, 180);
+    box-shadow: 0 5px rgb(73, 23, 180);
     transform: translateY(4px);
   }

@@ -3,13 +3,13 @@
     <br />
     <h2>{{student.firstName}}
       {{student.lastName}}
-      - Student:
+      Student
       {{student.studentNum}}</h2>
     <hr />
     <form method="post" action="/student/update">
       <input type="hidden" name="studentNum" value="{{student.studentNum}}" />
       <fieldset>
-        <legend>Personal Information</legend>
+        <legend>Information</legend>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -49,7 +49,6 @@
               />
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -86,62 +85,44 @@
                         </div>
                     </div>
                 </div>
-
             </fieldset>
             <fieldset>
-             <legend>Academic Information</legend>
+             <legend>Academic</legend>
           <div class="row">
             <div class="col-md-4">
-              <label>College Employment:</label><br />
-               
+              <label>Employment:</label><br />
               <div class="form-check">
-              
                 <input
-                
                   class="form-check-input"
                   name="TA"
                   type="checkbox"
                   id="TA"
                   {{#if student.TA}}checked{{/if}} 
-                  
                 />
-               
-               
                 <label class="form-check-label" for="TA" >
-                  Teaching Assistant
+                  Teaching Assistant 
                 </label>
-               
               </div>
-               
               <br />
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label>Enrollment Status:</label><br />
-                  
                 <label class="checkbox-inline">
-                 
                   <input type="radio" name="status" value="Full Time" {{#equal student.status "Full Time"}}checked{{/equal}} />
-                  
                   Full Time
                 </label>
                 <label class="checkbox-inline">
-                 
                   <input type="radio" name="status" value="Part Time" {{#equal student.status "Part Time"}}checked{{/equal}} />
-                  
                   Part Time
-                  
                 </label>
-                
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="course">Enrolled in Course:</label>
-                
                 <select class="form-control" name="course" id="course">
-                  <option value="1" {{#equal student.course "1"}}selected{{/equal}}>Relational Database Design and
-                    Implementation</option>
+                  <option value="1" {{#equal student.course "1"}}selected{{/equal}}>Relational Database Design and Implementation</option>
                   <option value="2" {{#equal student.course "2"}}selected{{/equal}}>Java Programming</option>
                   <option value="3" {{#equal student.course "3"}}selected{{/equal}}>Introduction to Cloud Computing</option>
                   <option value="4" {{#equal student.course "4"}}selected{{/equal}}>Database Administration and Management</option>
@@ -151,15 +132,12 @@
                   <option value="8" {{#equal student.course "8"}}selected{{/equal}}>Accessing Big Data</option>
                   <option value="9" {{#equal student.course "9"}}selected{{/equal}}>Datawarehousing</option>
                   <option value="10" {{#equal student.course "10"}}selected{{/equal}}>Security in Databases and Web Applications</option>
-                  <option value="11" {{#equal student.course "11"}}selected{{/equal}}>Work Term Preparation (Work-Integrated
-                    Learning option only)</option>
+                  <option value="11" {{#equal student.course "11"}}selected{{/equal}}>Work Term Preparation (Work-Integrated Learning option only)</option>
                 </select>
-              
               </div>
             </div>
           </div>
         </fieldset>
-
       <input
         type="submit"
         class="btn btn-primary float-right"
